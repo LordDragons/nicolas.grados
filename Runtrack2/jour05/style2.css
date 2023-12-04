@@ -1,0 +1,13 @@
+body{
+    background-color: black;
+    font-size: x-large;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+button {
+    background-color: gold;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
