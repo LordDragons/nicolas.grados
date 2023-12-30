@@ -1,0 +1,31 @@
+body {
+    text-align: center;
+    padding: 50px;
+    background-image: url("./image/parchemin_vierge.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h1 {
+    color: goldenrod;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 10vw;
+    font-family: Brush Script MT, Brush Script Std, cursive;
+    background-color: #f8e8c5;
+    line-height: 1.2;
+    margin: 2vw;
+}
+
+.btn-violet{
+    background-color: blueviolet;
+    color: whitesmoke;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
