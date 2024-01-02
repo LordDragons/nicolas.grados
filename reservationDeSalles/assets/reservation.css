@@ -1,0 +1,58 @@
+.body-galerie {
+    background-color: rgba(0, 0, 0, 0.476);
+}
+
+.carousel-slide {
+    display: none;
+
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    padding-top: 3vw;
+}
+
+.carousel-slide img {
+
+    width: 50vw;
+    height: 30vw;
+    border-radius: 50%;
+    border: 5px solid;
+
+}
+
+body {
+    text-align: center;
+    padding: 2vw
+}
+
+h1 {
+    color: goldenrod;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.btn-custom {
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+form {
+    margin-top: 20px;
+}
