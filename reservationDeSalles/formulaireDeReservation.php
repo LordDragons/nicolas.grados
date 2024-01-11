@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $debutFormate = $dateDebut->format('Y-m-d H:i:s');
         $finFormatee = $dateFin->format('Y-m-d H:i:s');
 
-        if (isAvailable($salle, $debut, $fin, $description, $conn)) {
-            saveReservation($salle, $debut, $fin, $description, $conn);
+        if (isAvailable($salle, $debut, $fin, $description, $bdd)) {
+            saveReservation($salle, $debut, $fin, $description, $bdd);
             echo "<p>Réservation réussie!</p>";
         } else {
             echo "<p>La salle n'est pas disponible pour le créneau sélectionné.</p>";
