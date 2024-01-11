@@ -15,6 +15,7 @@
     <div class="btn-container">
         <button type="button" class="btn btn-primary btn-custom"><a href="index.php">Accueil</a></button>
         <button type="button" class="btn btn-info btn-custom"><a href="planning.php">Planning</a></button>
+        <button type="button" class="btn btn-danger btn-custom"><a href="formulaireDeReservation.php">Réservation</a></button>
         <button type="button" class="btn btn-secondary btn-custom"><a href="inscription.php">Inscription</a></button>
         <button type="button" class="btn btn-success btn-custom"><a href="connexion.php">Connexion</a></button>
     </div>
