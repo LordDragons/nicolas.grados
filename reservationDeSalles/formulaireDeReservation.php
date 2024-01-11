@@ -24,10 +24,10 @@ $username = "root";
 $password = "";
 $dbname = "reservationssalles";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$bdd = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($bdd->connect_error) {
+    die("Connection failed: " . $bdd->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -119,8 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             foreach ($joursSemaine as $jour) {
                 echo "<td>" ;
                     $slotKey = "{$jour}_{$heureFormat}" ;
-                    $isReserved = isset($_POST['reservations'][$slotKey]) ? 'checked' : '' ;
-                    echo "<input class=réservé name='reservations[$slotKey]' value='$isReserved' readonly>" ;
+                    $isReserved = isset($_GET['reservations'][$slotKey]) ? 'checked' : '' ;
+                    echo "<input class=reserved name='reservations[$slotKey]' value='$isReserved' readonly>" ;
                     echo "</td>" ;
                 }
                 echo "</tr>" ;

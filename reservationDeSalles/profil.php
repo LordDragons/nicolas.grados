@@ -178,15 +178,16 @@
     echo "<tr><th>Heure</th>";
 
     // Réinitialiser la date au début de la semaine sélectionnée
+    $day = '';
+    
     $dayNumber = $userSelectedDate->format('w');
     if ($dayNumber == '0') {
-        $day = '+1';
+        $userSelectedDate->modify('+1 days');
     } else if ($dayNumber == '6') {
-        $day = '+2';
+        $userSelectedDate->modify('+2 days');
     } else if ($dayNumber > '1' && $dayNumber < '6') {
-        $day = '-' . (intval($dayNumber) - 1);
+        $userSelectedDate->modify('-' . (intval($dayNumber) - 1) . ' days');
     }
-    $userSelectedDate->modify("{$day} days");
 
     // Afficher les jours de la semaine et les dates correspondantes pour la semaine sélectionnée
     for ($i = 0; $i < 5; $i++) {
@@ -212,42 +213,25 @@
             $slotKey = "{$userSelectedDate->format('d/m/y')}_{$heureFormat}";
 
             echo "<td>";
+       
             ///*****************************Affichage des reservations************* */
 
-            $query = "SELECT * FROM reservations";
-            $result = $bdd->query($query);
+         $query = "SELECT debut, fin FROM reservations where debut = ? and fin = ?";
+            $stmt = $bdd->prepare($query);
+            $stmt->bind_param('ss', $debutFormate, $finFormatee);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        foreach($result as $row){
-            
-            foreach ($result as $row) {
-                if ($row['debut'] = $userSelectedDate) {
-                    echo "<span style='color: red;'>Reserved</span>";
-                } else {
-                    echo "<input class='libre' name='reservations[$slotKey]'>";
+           if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $start_date = $row['debut'];
+                    $end_date = $row['fin'];
+
+                    echo "Réservé de $start_date à $end_date";
                 }
-            }
-            
-        }
-
-        
-/*
-            // Vérifiez si l'emplacement est réservé depuis la base de données
-            if (isset($reservationsFromDatabase[$slotKey])) {
-                $reservedBy = $reservationsFromDatabase[$slotKey]['reserved_by'];
-                echo "<span style='color: red;'>Reserved</span><br>{$reservedBy}";
             } else {
-                $isReserved = '';
-
-                if (isset($_POST['reservations'][$slotKey])) {
-
-                    echo 'Réservé';
-                } else {
-                }
-                echo "<input class='réservé' name='reservations[$slotKey]' value='$isReserved'>";
+                echo "Aucune réservation trouvée.";
             }
-*/
-
-
             echo "</td>";
         }
 
@@ -273,3 +257,4 @@
 </body>
 
 </html>
+

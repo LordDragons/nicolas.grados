@@ -70,15 +70,15 @@ function validerReservation($planning, $debut, $fin) {
 // Fonction pour vérifier la disponibilité de la salle
 function isAvailable($salle, $debut, $fin, $description) {
     
-    $conn = new mysqli("localhost", "root", "", "reservationssalles");
+    $bdd = new mysqli("localhost", "root", "", "reservationssalles");
 
     // Vérifiez la connexion
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($bdd->connect_error) {
+        die("Connection failed: " . $bdd->connect_error);
     }
 
     // Préparez la requête SQL pour vérifier la disponibilité
-    $stmt = $conn->prepare("SELECT * FROM reservations WHERE salle = ? AND debut < ? AND fin > ? AND description = ?");
+    $stmt = $bdd->prepare("SELECT * FROM reservations WHERE salle = ? AND debut < ? AND fin > ? AND description = ?");
     $stmt->bind_param("sdds",$salle, $debut, $fin, $description);
     $stmt->execute();
 
@@ -86,7 +86,7 @@ function isAvailable($salle, $debut, $fin, $description) {
     $stmt->store_result();
     $count = $stmt->num_rows;
     $stmt->close();
-    $conn->close();
+    $bdd->close();
 
     return $count === 0;
 }
@@ -96,11 +96,11 @@ function isAvailable($salle, $debut, $fin, $description) {
 
 function saveReservation($salle, $debut, $fin, $description) {
     // Connexion à la base de données
-    $conn = new mysqli("localhost", "root", "", "reservationssalles");
+    $bdd = new mysqli("localhost", "root", "", "reservationssalles");
 
     // Vérifiez la connexion
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($bdd->connect_error) {
+        die("Connection failed: " . $bdd->connect_error);
     }
 
     // Convertir le format de la date
@@ -111,7 +111,7 @@ function saveReservation($salle, $debut, $fin, $description) {
     if (isset($_COOKIE['id_utilisateur'])) {
         $id_utilisateur = $_COOKIE['id_utilisateur'];
 
-        $stmt = $conn->prepare("INSERT INTO reservations (salle, debut, fin, description, id_utilisateur) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $bdd->prepare("INSERT INTO reservations (salle, debut, fin, description, id_utilisateur) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssi", $salle, $debut, $fin, $description, $id_utilisateur);
 
         // Execute the statement
@@ -126,14 +126,14 @@ function saveReservation($salle, $debut, $fin, $description) {
         echo "<p>Erreur: Session utilisateur non définie.</p>";
     }
 
-    $conn->close();
+    $bdd->close();
 }
 
 //gérer la demande
 
 function handleRequest()
 {
-    global $conn;
+    global $bdd;
 
     if (isset($_GET['description'])) {
         $nouvelleReservation = $_GET['description'];
@@ -143,7 +143,7 @@ function handleRequest()
         if (!empty($nouvelleReservation) && isset($_SESSION['id_utilisateur'])) {
             $id_utilisateur = $_SESSION['id_utilisateur'];
 
-            $requeteNouveau = $conn->prepare("INSERT INTO reservations (salle, debut, id_utilisateur, description, fin) VALUES (?, ?, ?, ?, ?)");
+            $requeteNouveau = $bdd->prepare("INSERT INTO reservations (salle, debut, id_utilisateur, description, fin) VALUES (?, ?, ?, ?, ?)");
             $requeteNouveau->bind_param('isiss', $salle, $debut, $id_utilisateur, $nouvelleReservation, $fin);
             $requeteNouveau->execute();
 
@@ -201,12 +201,12 @@ function displaySchedule()
 //afficher le tableau de réservation
 function displayReservationTable()
 {
-    global $conn;
+    global $bdd;
         echo "<h2>Table des Réservations</h2>";
 
     // selon la structure de table de réservation avec des colonnes id, salle, debut, fin, description
     $sql = "SELECT id, salle, debut, fin, description FROM reservations";
-    $result = $conn->query($sql);
+    $result = $bdd->query($sql);
 
     if ($result->num_rows > 0) {
         echo "<table>";

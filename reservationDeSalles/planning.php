@@ -56,7 +56,7 @@ $username = "root";
 $password = "";
 $dbname = "reservationssalles";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$bdd = new mysqli($servername, $username, $password, $dbname);
 
 if (isset($_SESSION['id_utilisateur'])) {
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
