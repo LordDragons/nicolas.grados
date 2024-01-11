@@ -24,10 +24,10 @@ $username = "root";
 $password = "";
 $dbname = "reservationssalles";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$bdd = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($bdd->connect_error) {
+    die("Connection failed: " . $bdd->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $debutFormate = $dateDebut->format('Y-m-d H:i:s');
         $finFormatee = $dateFin->format('Y-m-d H:i:s');
 
-        if (isAvailable($salle, $debut, $fin, $description, $conn)) {
-            saveReservation($salle, $debut, $fin, $description, $conn);
+        if (isAvailable($salle, $debut, $fin, $description, $bdd)) {
+            saveReservation($salle, $debut, $fin, $description, $bdd);
             echo "<p>Réservation réussie!</p>";
         } else {
             echo "<p>La salle n'est pas disponible pour le créneau sélectionné.</p>";

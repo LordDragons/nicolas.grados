@@ -217,8 +217,7 @@
             $query = "SELECT * FROM reservations";
             $result = $bdd->query($query);
 
-        foreach($result as $row){
-            
+                   
             foreach ($result as $row) {
                 if ($row['debut'] = $userSelectedDate) {
                     echo "<span style='color: red;'>Reserved</span>";
@@ -227,7 +226,7 @@
                 }
             }
             
-        }
+        
 
         
 /*
