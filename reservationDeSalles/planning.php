@@ -5,45 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/reservation.css">
+    <link rel="stylesheet" href="assets//reservation.css">
     <title>Planning de la salle</title>
 </head>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th,
-    td {
-        border: 1px #ddd solid;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    h1 {
-        text-align: center;
-    }
-
-    .jour-inactif {
-        color: #888;
-    }
-
-    .reserved {
-        background-color: red;
-        content: "Réservé"; 
-    }
-</style>
-
 <body>
     <h1>Reservation de la salle</h1>
 
@@ -97,76 +61,105 @@ if (isset($_SESSION['id_utilisateur'])) {
 
     <?php
    echo "<h1>Planning des salles</h1>";
-    $joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+   echo "<form method='post'>";
+   echo "<label for='selectedDate'>Choisir la semaine :</label>";
+   echo "<input type='date' id='selectedDate' name='selectedDate' required>";
+   echo "<button type='submit'>Afficher la semaine</button>";
+   echo "</form>";
 
-    $dateDebut = new DateTime();
-    $dateFin = new DateTime();
 
-    echo "<form method='post'>";
-    echo "<label for='selectedDate'>Choisir la semaine :</label>";
-    echo "<input type='date' id='selectedDate' name='selectedDate' required>";
-    echo "<button type='submit'>Afficher la semaine</button>";
-    echo "</form>";
-    
-    
-    // Définir le fuseau horaire à Paris (France)
-    date_default_timezone_set('Europe/Paris');
-    $joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
-    
-    // Vérifiez si une date sélectionnée par l'utilisateur est fournie, sinon utilisez la semaine en cours
-    $userSelectedDate = isset($_POST['selectedDate']) ? new DateTime($_POST['selectedDate']) : new DateTime('this week');
-    
-    echo "<table>";
-    echo "<tr><th>Heure</th>";
-    
-    // Réinitialiser la date au début de la semaine sélectionnée
-    $userSelectedDate->modify('-5 days');
-    
-    // Afficher les jours de la semaine et les dates correspondantes pour la semaine sélectionnée
-    for ($i = 0; $i < 5; $i++) {
-        $currentDay = $userSelectedDate->format('d/m/y');
-        echo "<th>{$joursSemaine[$i]}<br>$currentDay</th>";
-    
-        // Move to the next day
-        $userSelectedDate->modify('+1 day');
-    }
-    
-    echo "</tr>";
-    
-    // Réinitialiser la date au début de la semaine sélectionnée
-    $userSelectedDate->modify('-5 days');
-    
-    for ($heure = 9; $heure <= 17; $heure++) {
-        $heureFormat = sprintf('%02d', $heure);
-        echo "<tr><td>$heureFormat:00 - $heureFormat:59</td>";
-    
-    
-        for ($i = 0; $i < 5; $i++) {
-            echo "<td>";
-            $slotKey = "{$userSelectedDate->format('d/m/y')}_{$heureFormat}";
-            
-            // Vérifiez si l'emplacement est réservé
-            if (isset($_POST['reservations'][$slotKey])) {
-                $reservedBy = $_POST['reservations'][$slotKey];
-                echo "<span style='color: red;'>Réservée</span><br>{$reservedBy}";
-            } else {
-                $isReserved = isset($_POST['reservations'][$slotKey]) ? 'checked' : '';
-                echo "<input class='réservé' name='reservations[$slotKey]' value='$isReserved'>";
-            }
-    
-            echo "</td>";
-    
-    
-        }
-    
-        echo "</tr>";
-        
-        $userSelectedDate->modify('+1 day');
-    }
-    
-    echo "</table>";
+   // Définir le fuseau horaire à Paris (France)
+   date_default_timezone_set('Europe/Paris');
+   $joursSemaine = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 
-    ?>
+   // Vérifiez si une date sélectionnée par l'utilisateur est fournie, sinon utilisez la semaine en cours
+   $userSelectedDate = isset($_POST['selectedDate']) ? new DateTime($_POST['selectedDate']) : new DateTime('this week');
+
+
+   echo "<table>";
+   echo "<tr><th>Heure</th>";
+
+   // Réinitialiser la date au début de la semaine sélectionnée
+   $day = '';
+
+   $dayNumber = $userSelectedDate->format('w');
+   if ($dayNumber == '0') {
+       $userSelectedDate->modify('+1 days');
+   } else if ($dayNumber == '6') {
+       $userSelectedDate->modify('+2 days');
+   } else if ($dayNumber > '1' && $dayNumber < '6') {
+       $userSelectedDate->modify('-' . (intval($dayNumber) - 1) . ' days');
+   }
+
+   $userSelectedDateStart = clone $userSelectedDate; //Met en mémoire la date sélectionnée
+   // Afficher les jours de la semaine et les dates correspondantes pour la semaine sélectionnée
+   for ($i = 0; $i < 5; $i++) {
+       $currentDay = $userSelectedDate->format('w d/m/y');
+       $explodeCurrentDay = explode(' ', $currentDay);
+
+       echo "<th>{$joursSemaine[$explodeCurrentDay[0]]}<br>$explodeCurrentDay[1]</th>";
+
+       $userSelectedDate->modify('+1 day');
+   }
+
+   echo "</tr>";
+
+   // Requete de récupération des données
+   $sql = "SELECT * FROM reservations WHERE debut >= '{$userSelectedDateStart->format('Y-m-d')}' AND fin <= '{$userSelectedDate->format('Y-m-d')}'";
+   $result = $bdd->query($sql);
+
+   //Affichage des Heures au début du tableau
+   for ($heure = 9; $heure <= 17; $heure++) {
+       $dateTemp = clone $userSelectedDateStart;
+       $heureFormat = sprintf('%02d', $heure);
+       $heureFinFormat = $heure + 1;
+       $heureFinFormat = sprintf('%02d', $heureFinFormat);
+       echo "<tr><td>$heureFormat:00 - $heureFinFormat:00</td>";
+
+       ///*****************************Affichage des reservations************* */
+
+       for ($i = 5; $i > 0; $i--) {
+
+           $dateFormatCompare = new DateTime($dateTemp->format('Y-m-d') . " {$heureFormat}:00:00"); // Compare les dates
+           $dateFormatCompareFin = new DateTime($dateTemp->format('Y-m-d') . " {$heureFinFormat}:00:00"); // Compare les dates
+
+           echo "<td class='";
+
+           $reservationInfo = "";
+
+           if ($result->num_rows > 0) {
+               foreach ($result as $row) {
+
+                   $newDateDebut = new DateTime($row['debut']);
+                   $newDateFin = new DateTime($row['fin']);
+
+                   if ($dateFormatCompare >= $newDateDebut  &&   $dateFormatCompareFin <= $newDateFin) {
+                       $debutFormatee = $row['debut'];
+                       $finFormatee = $row['fin'];
+                       $reservationInfo .= "reserved'> <span class='reserved'>Réservé</span>";
+                   } else {
+                       echo "'>";
+                       echo "Pas de Réservation ";
+                   }
+               }
+               echo $reservationInfo;
+           } else {
+               echo "'>";
+               echo "Pas de Réservation";
+           }
+
+           echo "</td>";
+
+           $dateTemp->modify('+1 day');
+       }
+       echo "</tr>";
+   }
+
+   echo "</table>";
+
+   $bdd->close();
+
+   ?>
 </body>
 
 </html>

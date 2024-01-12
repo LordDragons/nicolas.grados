@@ -1,3 +1,12 @@
+<?php
+
+function debugE($element)
+{
+    echo '<pre>';
+    var_dump($element);
+    echo '</pre>';
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -141,13 +150,13 @@
         $dateFin = new DateTime($fin);
 
         // Formater les dates dans le format souhaité
-        $debutFormate = $dateDebut->format('Y-m-d H:i:s');
+        $debutFormatee = $dateDebut->format('Y-m-d H:i:s');
         $finFormatee = $dateFin->format('Y-m-d H:i:s');
 
         // Vérifiez la disponibilité de la salle
-        if (isAvailable($salle, $debutFormate, $finFormatee, $description)) {
+        if (isAvailable($salle, $debutFormatee, $finFormatee, $description)) {
             // Si la salle est disponible, enregistrez la réservation
-            saveReservation($salle, $debutFormate, $finFormatee, $description);
+            saveReservation($salle, $debutFormatee, $finFormatee, $description);
             echo "<p>Réservation réussie!</p>";
         } else {
             echo "<p>La salle n'est pas disponible pour le créneau sélectionné.</p>";
@@ -174,12 +183,13 @@
     // Vérifiez si une date sélectionnée par l'utilisateur est fournie, sinon utilisez la semaine en cours
     $userSelectedDate = isset($_POST['selectedDate']) ? new DateTime($_POST['selectedDate']) : new DateTime('this week');
 
+
     echo "<table>";
     echo "<tr><th>Heure</th>";
 
     // Réinitialiser la date au début de la semaine sélectionnée
     $day = '';
-    
+
     $dayNumber = $userSelectedDate->format('w');
     if ($dayNumber == '0') {
         $userSelectedDate->modify('+1 days');
@@ -189,6 +199,7 @@
         $userSelectedDate->modify('-' . (intval($dayNumber) - 1) . ' days');
     }
 
+    $userSelectedDateStart = clone $userSelectedDate; //Met en mémoire la date sélectionnée
     // Afficher les jours de la semaine et les dates correspondantes pour la semaine sélectionnée
     for ($i = 0; $i < 5; $i++) {
         $currentDay = $userSelectedDate->format('w d/m/y');
@@ -201,43 +212,55 @@
 
     echo "</tr>";
 
-    // Réinitialiser la date au début de la semaine sélectionnée
-    $userSelectedDate->modify('-5 days');
+    // Requete de récupération des données
+    $sql = "SELECT * FROM reservations WHERE debut >= '{$userSelectedDateStart->format('Y-m-d')}' AND fin <= '{$userSelectedDate->format('Y-m-d')}'";
+    $result = $bdd->query($sql);
 
+    //Affichage des Heures au début du tableau
     for ($heure = 9; $heure <= 17; $heure++) {
+        $dateTemp = clone $userSelectedDateStart;
         $heureFormat = sprintf('%02d', $heure);
-        echo "<tr><td>$heureFormat:00 - $heureFormat:59</td>";
+        $heureFinFormat = $heure + 1;
+        $heureFinFormat = sprintf('%02d', $heureFinFormat);
+        echo "<tr><td>$heureFormat:00 - $heureFinFormat:00</td>";
 
+        ///*****************************Affichage des reservations************* */
 
-        for ($i = 0; $i < 5; $i++) {
-            $slotKey = "{$userSelectedDate->format('d/m/y')}_{$heureFormat}";
+        for ($i = 5; $i > 0; $i--) {
 
-            echo "<td>";
-       
-            ///*****************************Affichage des reservations************* */
+            $dateFormatCompare = new DateTime($dateTemp->format('Y-m-d') . " {$heureFormat}:00:00"); // Compare les dates
+            $dateFormatCompareFin = new DateTime($dateTemp->format('Y-m-d') . " {$heureFinFormat}:00:00"); // Compare les dates
 
-         $query = "SELECT debut, fin FROM reservations where debut = ? and fin = ?";
-            $stmt = $bdd->prepare($query);
-            $stmt->bind_param('ss', $debutFormate, $finFormatee);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            echo "<td class='";
 
-           if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $start_date = $row['debut'];
-                    $end_date = $row['fin'];
+            $reservationInfo = "";
 
-                    echo "Réservé de $start_date à $end_date";
+            if ($result->num_rows > 0) {
+                foreach ($result as $row) {
+
+                    $newDateDebut = new DateTime($row['debut']);
+                    $newDateFin = new DateTime($row['fin']);
+
+                    if ($dateFormatCompare >= $newDateDebut  &&   $dateFormatCompareFin <= $newDateFin) {
+                        $debutFormatee = $row['debut'];
+                        $finFormatee = $row['fin'];
+                        $reservationInfo .= "reserved'> <span class='reserved'>Réservé</span>";
+                    } else {
+                        echo "'>";
+                        echo "Pas de Réservation ";
+                    }
                 }
+                echo $reservationInfo;
             } else {
-                echo "Aucune réservation trouvée.";
+                echo "'>";
+                echo "Pas de Réservation";
             }
+
             echo "</td>";
+
+            $dateTemp->modify('+1 day');
         }
-
         echo "</tr>";
-
-        $userSelectedDate->modify('+1 day');
     }
 
     echo "</table>";
@@ -257,4 +280,3 @@
 </body>
 
 </html>
-

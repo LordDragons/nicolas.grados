@@ -37,104 +37,60 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 <body>
 
-    <h1>Formulaire de réservation</h1>
+<h1>Formulaire de réservation</h1>
 
-    <form action="profil.php" method="GET">
-        <label for="salle">Salle :</label>
-        <select name="salle" id="salle">
-            <option value="salle1">Salle 1</option>
-            <option value="salle2">Salle 2</option>
-            <option value="salle3">Salle 3</option>
-            <option value="salle4">Salle 4</option>
-            <option value="salle5">Salle 5</option>
-        </select>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    <label for="salle">Salle :</label>
+    <select name="salle" id="salle">
+        <option value="salle1">Salle 1</option>
+        <option value="salle2">Salle 2</option>
+    </select>
 
-        <label for="debut">Date et heure de début :</label>
-        <input type="datetime-local" name="debut" required>
+    <label for="debut">Date et heure de début :</label>
+    <input type="datetime-local" name="debut" required>
 
-        <label for="fin">Date et heure de fin :</label>
-        <input type="datetime-local" name="fin" required>
+    <label for="fin">Date et heure de fin :</label>
+    <input type="datetime-local" name="fin" required>
 
-        <label for="description">Thème :</label>
-        <select name="description" id="description">
-            <option value="mariage">Mariage</option>
-            <option value="jeu">Jeu de rôle/société</option>
-            <option value="anniv">Anniversaire</option>
-            <option value="divorce">Divorce</option>
-            <option value="loto">Loto</option>
-            <option value="Enterrement">Enterrement de vie garçon/fille</option>
-            <option value="autre">Autre</option>
-        </select>
+    <label for="description">Thème :</label>
+    <select name="description" id="description">
+        <option value="mariage">Mariage</option>
+        <option value="jeu">Jeu de rôle/société</option>
+        <option value="anniv">Anniversaire</option>
+        <option value="divorce">Divorce</option>
+        <option value="loto">Loto</option>
+        <option value="Enterrement">Enterrement de vie garçon/fille</option>
+        <option value="autre">Autre</option>
+    </select>
 
-        <input type="submit" value="Vérifier la disponibilité et Réserver">
-    </form>
+    <input type="submit" name="reserve" value="Vérifier la disponibilité et Réserver">
+</form>
 
-    <?php
-    if (isset($_GET['salle']) && isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['description'])) {
-        $salle = $_GET['salle'];
-        $description = $_GET['description'];
-        $debut = $_GET['debut'];
-        $fin = $_GET['fin'];
+<?php
+// Vérifiez si les paramètres de réservation sont présents
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['salle']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['description']) && isset($_POST['reserve'])) {
+    $salle = $_POST['salle'];
+    $debut = $_POST['debut'];
+    $fin = $_POST['fin'];
+    $description = $_POST['description'];
 
-        $dateDebut = new DateTime($debut);
-        $dateFin = new DateTime($fin);
+    // Convertir les chaînes de date en objets DateTime
+    $dateDebut = new DateTime($debut);
+    $dateFin = new DateTime($fin);
 
-        $debutFormate = $dateDebut->format('Y-m-d H:i:s');
-        $finFormatee = $dateFin->format('Y-m-d H:i:s');
+    // Formater les dates dans le format souhaité
+    $debutFormatee = $dateDebut->format('Y-m-d H:i:s');
+    $finFormatee = $dateFin->format('Y-m-d H:i:s');
 
-        if (isAvailable($salle, $debut, $fin, $description, $bdd)) {
-            saveReservation($salle, $debut, $fin, $description, $bdd);
-            echo "<p>Réservation réussie!</p>";
-        } else {
-            echo "<p>La salle n'est pas disponible pour le créneau sélectionné.</p>";
-        }
-
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th>Heure</th>";
-        displayWeekDaysFrench();
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-        displayTimeSlots($debut, $fin);
-        echo "</tbody>";
-        echo "</table>";
+    // Vérifiez la disponibilité de la salle
+    if (isAvailable($salle, $debutFormatee, $finFormatee, $description)) {
+        // Si la salle est disponible, enregistrez la réservation
+        saveReservation($salle, $debutFormatee, $finFormatee, $description);
+        echo "<p>Réservation réussie!</p>";
+    } else {
+        echo "<p>La salle n'est pas disponible pour le créneau sélectionné.</p>";
     }
-
-    $joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'] ;
-
-    echo "<table>" ;
-        echo "<tr><th>Heure</th>" ;
-        
-        foreach ($joursSemaine as $jour) {
-            echo "<th>$jour</th>" ;
-        }
-        echo "</tr>" ;
-        
-        for ($heure = 9 ; $heure <= 17 ; $heure++) {
-            $heureFormat = sprintf('%02d', $heure) ;
-            echo "<tr><td>$heureFormat :00 - $heureFormat :59</td>" ;
-            
-            foreach ($joursSemaine as $jour) {
-                echo "<td>" ;
-                    $slotKey = "{$jour}_{$heureFormat}" ;
-                    $isReserved = isset($_GET['reservations'][$slotKey]) ? 'checked' : '' ;
-                    echo "<input class=reserved name='reservations[$slotKey]' value='$isReserved' readonly>" ;
-                    echo "</td>" ;
-                }
-                echo "</tr>" ;
-            }
-            
-            echo "</table>";
-            
-            
-            // Afficher le tableau et le planning de réservation uniquement lors de la soumission du formulaire
-            
-            if (isset($_GET['salle']) && isset($_GET['debut']) && isset($_GET['fin']) && isset($_GET['description'])) {
-                displayReservationTable();
-                displaySchedule();
-            }
+}
             ?>
         
 
