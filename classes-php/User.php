@@ -33,45 +33,45 @@ class User
         $stmt->execute();
 
 
-       // Créer une instance de la classe User avec les informations récupérées
-       // $user = new User("Tom13", "azerty", "thomas@gmail.com", "Thomas", "DUPONT");
-
-       return "Enregistrement réussi " . $firstname;
+        // Créer une instance de la classe User avec les informations récupérées
+        // $user = new User("Tom13", "azerty", "thomas@gmail.com", "Thomas", "DUPONT");
+        
+        return "Enregistrement réussi " . $firstname;
     }
-
+    
     public function connect($login, $password)
     {
-
+        
         $query = "SELECT * FROM utilisateurs WHERE login = ?";
         $stmt = $this->bdd->prepare($query);
         $stmt->bind_param("s", $login);
         $stmt->execute();
-
+        
         $result = $stmt->get_result();
-
+        
         if ($result->num_rows == 1) {
             $user = $result->fetch_assoc();
-
+            
             if (password_verify($password, $user['password'])) {
                 $this->id = $user ['id'];
                 $this->login = $user['login'];
                 $this->email = $user['email'];
                 $this->firstname = $user['firstname'];
                 $this->lastname = $user['lastname'];
-
+                
                 return true; // Connexion réussie
             }
         }
-
+        
         return false; // Login ou mot de passe incorrect
     }
-
+    
     public function disconnect()
     {
         // Mettre fin à la session
         session_destroy();
     }
-
+    
     public function delete()
     {
         // Supprimer l'utilisateur de la base de données
@@ -79,29 +79,29 @@ class User
         $stmt = $this->bdd->prepare($query);
         $stmt->bind_param("i", $this->id);
         $stmt->execute();
-
+        
         // Déconnecter l'utilisateur après suppression
         $this->disconnect();
     }
     public function update($login, $password, $email, $firstname, $lastname) {
-
+        
         $query = "UPDATE utilisateurs SET login = ?, password = ?, email = ?, firstname = ?, lastname = ? WHERE id = ?";
         $stmt = $this->bdd->prepare($query);
         $stmt->bind_param("sssssi", $login, $password, $email, $firstname, $lastname, $this->id);
         $stmt->execute();
-
+        
         // Mettre à jour les attributs de l'objet
         $this->login = $login;
         $this->email = $email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
     }
-
+    
     public function isConnected() {
         // Vérifie si l'ID de l'utilisateur est défini
         return isset($this->id);
     }
-   
+    
     public function getAllInfos() {
         return [
             'id' => $this->id,
@@ -111,19 +111,19 @@ class User
             'lastname' => $this->lastname,
         ];
     }
-
+    
     public function getLogin() {
         return $this->login;
     }
-
+    
     public function getEmail() {
         return $this->email;
     }
-
+    
     public function getFirstname() {
         return $this->firstname;
     }
-
+    
     public function getLastname() {
         return $this->lastname;
     }
@@ -138,4 +138,4 @@ $firstname = $user->getFirstname();
 $lastname = $user->getLastname();
 
 
-echo $userInfo;
+echo $user->register('Toto', 'tata', 'toto@tata','Titi', 'Tutu');
