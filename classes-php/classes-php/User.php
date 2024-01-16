@@ -11,7 +11,6 @@ class User
 
     public function __construct()
     {
-        session_start(); // Start a session
         $this->id = 0;
         $this->login = "";
         $this->email = "";
@@ -103,35 +102,28 @@ class User
         return isset($this->id);
     }
    
-    public function getAllInfos()
-    {
-        $query = "SELECT * FROM utilisateurs";
-        $stmt = $this->bdd->prepare($query);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        $userInfos = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $userInfos[] = $row;
-        }
-
-        return $userInfos;
+    public function getAllInfos() {
+        return [
+            'id' => $this->id,
+            'login' => $this->login,
+            'email' => $this->email,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+        ];
     }
-    
-    
+
     public function getLogin() {
         return $this->login;
     }
-    
+
     public function getEmail() {
         return $this->email;
     }
-    
+
     public function getFirstname() {
         return $this->firstname;
     }
-    
+
     public function getLastname() {
         return $this->lastname;
     }
@@ -139,14 +131,16 @@ class User
 
 $user = new User();
 
-$userInfos = $user->getAllInfos();
+$userInfo = $user->getAllInfos();
+$login = $user->getLogin();
+$email = $user->getEmail();
+$firstname = $user->getFirstname();
+$lastname = $user->getLastname();
+
 
 echo "Informations de l'utilisateur : <br>";
-foreach ($userInfos as $userInfo) {
-    echo "ID : " . $userInfo['id'] . "<br>";
-    echo "Login : " . $userInfo['login'] . "<br>";
-    echo "Email : " . $userInfo['email'] . "<br>";
-    echo "Prénom : " . $userInfo['firstname'] . "<br>";
-    echo "Nom : " . $userInfo['lastname'] . "<br>";
-    echo "<br>";
-}
+echo "ID : " . $userInfo['id'] . "<br>";
+echo "Login : " . $login . "<br>";
+echo "Email : " . $email . "<br>";
+echo "Prénom : " . $firstname . "<br>";
+echo "Nom : " . $lastname . "<br>";
