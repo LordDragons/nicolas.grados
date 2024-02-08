@@ -1,77 +1,40 @@
 <?php
-class Product {
-    private $id;
-    private $name;
-    private $photos;
-    private $price;
-    private $description;
-    private $quantity;
-    private $createdAt;
-    private $updatedAt;
-    private $id_category; // Ajoutez la propriété id_category
+class Database
+{
+    private $host = 'localhost';
+    private $user = 'root';
+    private $password = '';
+    private $database = 'draft_shop';
 
+    private $db;
 
-    // Ajoutez la méthode getCategory
-    public function getCategory() {
-        // Supposons que Category soit une classe existante
-        $category = new Category($this->id_category, $this->name, $this->description);
+    public function __construct()
+    {
+        $this->db = new PDO("mysql:host={$this->host};dbname={$this->database}", $this->user, $this->password);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
 
-      return $category;
+    public function executeQuery($query, $params = array())
+    {
+        $statement = $this->db->prepare($query);
+
+        try {
+            $statement->execute($params);
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
 }
 
-// Exemple de classe Category (à adapter selon votre implémentation)
-class Category {
-    private $id;
-    private $name;
-    private $description;
-    private $createdAt;
-    private $updatedAt;
 
-    public function __construct($id, $name, $description, $createdAt = null, $updatedAt = null) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->createdAt = $createdAt ? $createdAt : new DateTime();
-        $this->updatedAt = $updatedAt ? $updatedAt : new DateTime();
-    }
+$db = new Database();
+$query = "INSERT INTO Product(name, price, description, quantity, created_at, updated_at) VALUES ('merdouille' ,1504 , 'superbe merdouille a ne pas louper' , 3200, NOW(), NOW())";
 
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
-        $this->updatedAt = new DateTime();
-    }
-
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function setDescription($description) {
-        $this->description = $description;
-        $this->updatedAt = new DateTime();
-    }
-
-    public function getCreatedAt() {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt() {
-        return $this->updatedAt;
-    }
+if ($db->executeQuery($query)) {
+    echo "Nouveau enregistrement réussi";
+} else {
+    echo "Impossible";
 }
 
-/*
-SELECT Catégory.Name
-FROM Catégory
-JOIN Product ON Catégory.ID = Product.ID_Catégory
-WHERE Product.ID = 2;
-*/
-
-?>
