@@ -14,7 +14,7 @@ class Product {
     // Ajoutez la méthode getCategory
     public function getCategory() {
         // Supposons que Category soit une classe existante
-        $category = new Category($this->id_category);
+        $category = new Category($this->id_category, $this->name, $this->description);
 
       return $category;
     }
