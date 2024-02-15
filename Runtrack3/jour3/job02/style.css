@@ -1,0 +1,23 @@
+.conteneur {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image {
+    width: 10vw;
+    height: 25vw;
+    margin: 0vw;
+}
+
+.message {
+    margin-top: 5vw;
+    font-weight: bold;
+}
+
+.gagne {
+    color: green !important;
+}
+
+.perdu {
+    color: red;
+}
