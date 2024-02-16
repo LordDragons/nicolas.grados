@@ -28,7 +28,7 @@ function renderPuzzle() {
   for (let i = 0; i < 9; i++) {
     const piece = document.createElement('div');
     piece.classList.add('puzzle-piece');
-    piece.style.backgroundImage = `url('job03/image_${puzzle[i]}.png')`;
+    piece.style.backgroundImage = `url('La_Plateforme_logo_${puzzle[i]}.png')`;
 
     if (puzzle[i] !== 9) {
       piece.addEventListener('click', () => movePiece(i));
