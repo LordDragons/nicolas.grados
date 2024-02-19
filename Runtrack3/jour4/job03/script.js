@@ -33,7 +33,7 @@ function containsLanguage(nameObject, targetLanguage) {
     return nameObject.includes(targetLanguage);
   }
 
-  // En supposant que nameObject est un objet avec des clefs de langue
+  // En supposant que nameObject est un objet avec des clés de langue
   const languageKeys = Object.keys(nameObject);
   return languageKeys.some(key => nameObject[key].includes(targetLanguage));
 }
@@ -51,7 +51,8 @@ function displayFilteredData(filteredData) {
   filteredData.forEach(item => {
     const li = document.createElement('li');
     const frenchName = item.name['french']; // Accéder au nom français
-    li.textContent = `ID: ${item.id}, Nom: ${frenchName}, Type: ${item.type}`;
+    const baseStats = item.base;
+    li.textContent = `ID: ${item.id}, Nom: ${frenchName}, Type: ${item.type}, Stats de base: ${JSON.stringify(baseStats)}`;
     ul.appendChild(li);
   });
 
