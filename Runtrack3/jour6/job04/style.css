@@ -1,0 +1,126 @@
+body {
+    margin-top: 2vw;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.section {
+    width: 40vw; /* Ajustez la largeur selon vos besoins */
+    height: 40vw; /* Ajustez la hauteur selon vos besoins */
+    margin: 2vw; /* Marge entre les sections */
+    border: 0.5vw solid #000;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    background-color: #88c1d0;
+}
+
+
+.logo {
+    font-size: 1.5em;
+}
+
+.nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 2vw;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px)  {
+    body {
+        column-count: 1;
+    }
+
+    .section {
+        background-color: #88c1d0;
+        width: 75vw;
+        height: 25vh;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: #333;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1600px) {
+    body {
+        margin: 0;
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        column-count: 2;
+        text-align: center;
+    }
+    
+
+  .section {
+
+    background-color: #88c1d0;
+    width: 40vw; /* Ajustez la largeur selon vos besoins */
+    height: 40vw; /* Ajustez la hauteur selon vos besoins */
+    margin: 2vw; /* Marge entre les sections */
+    border: 0.5vw solid #000;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+  }
+
+
+}
+
+@media screen and (min-width: 1600px) {
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    .section {
+        width: 50px;
+        height: 80px;
+        background-color: #88c1d0;
+        margin-right: 20px;
+    }
+
+    .section:last-child {
+        margin-right: 0;
+    }
+}
