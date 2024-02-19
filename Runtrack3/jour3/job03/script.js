@@ -9,6 +9,20 @@ function init() {
   renderPuzzle();
 }
 
+const imagePaths = [
+  "url('image/La_Plateforme_logo_1.png')",
+  "url('image/La_Plateforme_logo_2.png')",
+  "url('image/La_Plateforme_logo_3.png')",
+  "url('image/La_Plateforme_logo_4.png')",
+  "url('image/La_Plateforme_logo_5.png')",
+  "url('image/La_Plateforme_logo_6.png')",
+  "url('image/La_Plateforme_logo_7.png')",
+  "url('image/La_Plateforme_logo_8.png')",
+  "url('image/La_Plateforme_logo_9.png')",
+  
+  
+];
+
 function createPuzzle() {
   puzzle = [];
   emptyIndex = 8;
@@ -28,8 +42,11 @@ function renderPuzzle() {
   for (let i = 0; i < 9; i++) {
     const piece = document.createElement('div');
     piece.classList.add('puzzle-piece');
-    piece.style.backgroundImage = "url('C:\Users\karin\OneDrive\Bureau\ORDIFOND.jpg')";
+
     
+    piece.style.backgroundImage = imagePaths[puzzle[i] - 1];
+    piece.style.backgroundSize = 'cover';
+
     if (puzzle[i] !== 9) {
       piece.addEventListener('click', () => movePiece(i));
     }
@@ -37,6 +54,7 @@ function renderPuzzle() {
     puzzleContainer.appendChild(piece);
   }
 }
+
 
 function movePiece(index) {
   if (isMoveValid(index)) {
