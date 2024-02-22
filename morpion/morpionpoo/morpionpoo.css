@@ -1,0 +1,138 @@
+body {
+    background-image: url(../images/tapis-de-cartes.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+button {
+    width: 15vw;
+    height: 100%;
+    font-size: 2vw;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: -360px;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 24px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 8vw;
+    text-align: center;
+}
+
+.title-text {
+    background-color: black;
+    color: goldenrod;
+    padding: 0 2vw;
+    opacity: 50%;
+}
+
+h2 {
+    text-align: center;
+    margin-right: 2.5vw;
+    color: goldenrod;
+    background-color: black;
+
+}
+
+.cross {
+    font-family: 'Arial';
+    content: "✕";
+    /* Code unique pour croix */
+}
+
+.circle {
+    font-family: 'Arial';
+    content: "◯";
+    /* Code unique pour cercle */
+}
+
+.sword {
+    font-family: 'Arial';
+    content: "\1F5E1";
+    /* Code unique pour Epée */
+}
+
+.shield {
+    font-family: 'Arial';
+    content: "\1F6E1";
+    /* Code unique pour Bouclier */
+}
+
+.cat {
+    font-family: 'Arial';
+    content: "\1F408";
+    /* Code unique pour Chat */
+}
+
+.mouse {
+    font-family: 'Arial';
+    content: "\1F42D";
+    /* Code unique pour Souris */
+}
+
+.dog {
+    font-family: 'Arial';
+    content: "\1F415";
+    /* Code unique pour Chien */
+}
+
+.bone {
+    font-family: 'Arial';
+    content: "\1F9B4";
+    /* Code unique pour Os */
+}
+
+.theme-btn {
+    margin-right: 2vw;
+}
+
+.themes-container {
+    margin-top: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.jeu {
+    position: fixed;
+    top: 18vw;
+
+}
+
+.reset {
+    position: fixed;
+    bottom: 5vw;
+    text-align: center;
+    width: 100%;
+}
+
+.reset button {
+    border-radius: 50%;
+    background-color: red;
+}
+
+#score {
+    background-color: green;
+    margin-left: 10vw;
+    margin-top: 60px;
+}
+
+.plateau {
+    margin-left: 3vw;
+}
