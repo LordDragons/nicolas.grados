@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    font-family: 'Old English Text MT', 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    background-color: #4d3e3e;
+    color: #ffd700;
+    font-size: 2vw;
+}
+
+header {
+    background-color: #763c10;
+    text-align: center;
+    padding: 20px;
+}
+
+header a {
+    margin: 15px;
+    text-decoration: none;
+    color: #ffd700;
+    font-size: 15vw;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+    color: #ffd700;
+    text-align: center;
+}
+
+p {
+    color: #a68665;
+    line-height: 1.6;
+}
+
+a {
+    color: #ffd700;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #763c10;
+    color: #ffd700;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #5b2f0b;
+}
+
+.container {
+    max-width: 50vw;
+    padding: 3vw;
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 0.2);
+    border-radius: 0.5vw;
+    background-color: #8b735b;
+}
+
+.horloge {
+    background-color: black;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffd700;
+}
+
+/* Style de la liste d'alarmes */
+#alarmList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#alarmList li {
+    margin: 3vw;
+    padding: 2vw;
+    background-color: #8b735b;
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+#clockDisplay {
+    font-size: 8vw;
+    color: #ffd700;
+    text-align: center;
+    margin: 2vw;
+}
+
+#alarme {
+    text-align: center;
+    margin-top: 5vw;
+    position: absolute;
+    top: 380px;
+    left: 650px;
+}
+
+#alarme input,
+#alarme button {
+    margin: 2vw;
+    padding: 1vw;
+    font-size: 2vw;
+}
+
+#alarmeMessage input{
+    width: 10vw;
+}
+
+#radio-container {
+    position: relative;
+    width: 1750px;
+    height: 1000px;
+}
+
+#horloge {
+    position: absolute;
+    top: 200px;
+    left: 800px;
+    color: goldenrod;
+    font-family: 'Old English Text MT', 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    text-align: center;
+}
+
+#timer {
+    position: absolute;
+    top: 250px;
+    left: 400px;
+}
+
+#chronometre {
+    position: absolute;
+    top: 500px;
+    left: 400px;
+}
+
+
+
+
