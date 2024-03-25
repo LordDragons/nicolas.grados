@@ -1,0 +1,83 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3vw;
+    background-color: whitesmoke;
+}
+
+body {
+    background-color: rgb(6, 160, 211);
+    margin: 2vw;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.search-bar {
+    display: flex;
+}
+
+#search-input {
+    padding: 1vw;
+    margin-right: 1vw;
+}
+
+#search-button {
+    padding: 1vw;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 600px; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow: hidden;
+}
+
+.movie-card {
+    margin: 10px;
+    text-align: center;
+    max-width: 250px;
+}
+
+.movie-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#showMoreMovies {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.series-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 600px; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow: hidden;
+}
+
+.series-card {
+    margin: 10px;
+    text-align: center;
+    max-width: 250px;
+}
+
+.series-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#showMoreSeries {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
