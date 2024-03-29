@@ -1,0 +1,27 @@
+FROM node:20-slim
+# On crée le groupe et l'utilisateur avant les autres instructions
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+# On déplace WORKDIR et USER après la création du groupe et la création de l'utilisateur
+WORKDIR /app
+USER nextjs
+
+# On transfère tous les fichers package*.json du répertoir de l'hôte 
+# sur la cible avec les droits d'utilisation du dossier user:groupe  
+COPY --chown=nextjs:nodejs package*.json .
+
+# Nous avons utilisé npm sur l'hote pour générer les fichier on utilisera nmp sur la cible
+#RUN yarn build
+RUN npm install
+
+# On retire l'installation de yarn , nous avons utilisé nmp sur l'hôte pour générer les fichier package.json et package-lock.json
+#RUN yarn install --frozen-lockfile
+ENV NODE_ENV production
+
+# on copie tous les ficher du répertoire src vers la cible avec les bon droits user:groupe
+# le dossier src contiendra tous les fichiers de notre serveur node js
+COPY --chown=nodejs:nextjs ./src ./src
+
+EXPOSE 3000
+## on démarre le serveur node js à partir du dossier ./src/server.js
+CMD ["node", "./src/server.js"]
