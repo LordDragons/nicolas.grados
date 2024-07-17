@@ -1,0 +1,17 @@
+#puzzle-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+  }
+  
+  .puzzle-piece {
+    width: 100px;
+    height: 100px;
+    background-size: 300px 300px;
+    cursor: pointer;
+  }
+  
+  #message {
+    color: green;
+  }
+  
