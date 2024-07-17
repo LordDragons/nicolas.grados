@@ -1,0 +1,412 @@
+#navContainer {
+    box-sizing: border-box;
+    background-color: black;
+    width: 100%;
+    height: 8vh;
+    position: relative;
+    display: grid;
+    grid-template-columns: 55% 1fr 10vh 10vh;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    transition: all 200ms;
+    z-index: 17;
+    user-select: none;
+
+    .upToTop {
+        height: 0;
+    }
+
+    .navLeft {
+        justify-self: left;
+        padding-left: 2vh;
+
+        button,
+        a {
+            box-sizing: border-box;
+            text-transform: uppercase;
+            color: white;
+            background-color: transparent;
+            border: none;
+            padding: 0 2vw;
+            margin: 0 1em 0 0;
+            height: 8vh;
+
+        }
+
+        a {
+            line-height: 8vh;
+            padding: 2vh 4vh;
+            border-radius: 10px;
+            background-color: #482664;
+        }
+
+        button:after {
+            content: "▼";
+            color: #482664;
+        }
+
+        button:hover,
+        a:hover {
+            background-color: #1b1b1b;
+        }
+
+        a:hover {
+            color: #482664;
+            background-color: white;
+        }
+
+        .active {
+            color: black;
+            background-color: white !important;
+        }
+
+        .active:after {
+            content: "✖";
+        }
+    }
+
+    #logo {
+        box-sizing: border-box;
+        height: 14vh;
+        background-color: black;
+        border-radius: 47%;
+        padding: 5px 8px 13px 8px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        translate: -50% 0;
+        z-index: 100;
+        transition: all 200ms;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .logoMove {
+        position: absolute;
+        top: 0;
+        left: 25% !important;
+    }
+
+    #searchBarContainer {
+        display: block;
+        height: 8vh;
+        width: 100%;
+        padding: 0 1em 0 0;
+        position: relative;
+        align-self: right;
+
+        #searchBar {
+            box-sizing: border-box;
+            height: 4vh;
+            width: 100%;
+            border-radius: 10px;
+            margin: 2vh 0;
+            padding: 0.2em 1em;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            background-color: rgb(50, 50, 50);
+        }
+
+        #searchBarClose {
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            right: 1.5em;
+            translate: 0 -50%;
+            transition: all 200ms;
+        }
+
+        #searchBarClose:hover {
+            transform: rotate(90deg);
+        }
+    }
+
+
+    button {
+        background-color: transparent;
+        border: none;
+
+        img {
+            height: 4vh;
+            transition: all 200ms;
+        }
+
+        img:hover {
+            height: 5vh;
+        }
+    }
+
+    #searchBarOpen {
+        text-align: right;
+        width: 10vh;
+        justify-self: right;
+    }
+
+    a {
+        position: relative;
+        height: fit-content;
+        width: fit-content;
+        margin: auto;
+
+        span {
+            position: absolute;
+            right: -1vh;
+            top: -0;
+            background-color: white;
+            color: #482664;
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+            text-align: center;
+            line-height: 1em;
+            padding: 0.2em;
+            font-weight: bold;
+        }
+
+
+        img {
+            height: 4vh;
+            transition: all 200ms;
+        }
+    }
+
+    a img:hover {
+        height: 5vh;
+    }
+
+}
+
+.menuId {
+    position: absolute;
+    right: 50%;
+    bottom: -0;
+    background-color: white;
+    color: #482664;
+    border-radius: 0.5em;
+    height: 1em;
+    width: fit-content;
+    text-align: center;
+    line-height: 1em;
+    padding: 0.2em;
+    font-weight: bold;
+    translate: 50% 50%;
+}
+
+.navContainerOpen {
+    grid-template-columns: 35% 1fr 10vh 10vh !important;
+}
+
+#navContainerMobile {
+    display: none;
+}
+
+
+#navInfos,
+#navSearch {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    background: linear-gradient(355deg, #d1d1d1, white);
+    padding: 5em 5vw 4vh 5vw;
+    box-shadow: 0 0 500px rgb(0, 0, 0);
+    justify-items: center;
+    position: absolute;
+    top: 8vh;
+    left: 0;
+    z-index: 16;
+    display: none;
+
+    .navContainer {
+        border-right: 1px solid black;
+        width: 100%;
+        text-align: left;
+
+        p {
+            text-align: center;
+        }
+
+        a {
+            text-transform: uppercase;
+            display: block;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            margin: 0 auto 1em auto;
+            width: 80%;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 0.8em;
+        }
+
+        .promotions {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navH1 {
+            font-size: 1.3em;
+            text-transform: uppercase;
+            margin-bottom: 1em;
+            font-weight: 600;
+            color: #482664;
+        }
+    }
+
+    #fleche {
+        display: block;
+        text-decoration: none;
+        width: fit-content;
+        text-align: center;
+        background-color: white;
+        color: black;
+        padding: 0.5em 6em;
+        margin: 2em auto 0 auto;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .navContainer:last-child {
+        border-right: none;
+    }
+}
+
+#navSearch {
+    padding: 4em 5vw 0 5vw;
+    text-align: center;
+    border-bottom: 5px solid white;
+}
+
+#navInfos>div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+
+}
+
+
+@media (orientation: portrait) {
+    #navContainer {
+        grid-template-columns: 1fr;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 0 5vw;
+        z-index: 50;
+
+        .navLeft {
+            display: none;
+        }
+
+        #logo {
+            display: none;
+        }
+
+        a {
+            display: none;
+        }
+
+        .navLeft {
+            display: none;
+        }
+
+        #logo {
+            display: none;
+        }
+
+        #searchBarOpen {
+            display: none;
+        }
+
+        #searchBar {
+            width: 50vh;
+        }
+    }
+
+    #navContainerMobile {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 100%;
+        height: 8vh;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: black;
+        align-items: center;
+        padding: 0;
+        z-index: 50;
+        box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
+        transition: all 200ms;
+
+        a {
+            position: relative;
+            height: fit-content;
+            width: fit-content;
+            margin: auto;
+
+            span {
+                position: absolute;
+                right: -1vh;
+                top: -0;
+                background-color: white;
+                color: #482664;
+                border-radius: 50%;
+                height: 1em;
+                width: 1em;
+                text-align: center;
+                line-height: 1em;
+                padding: 0.2em;
+                font-weight: bold;
+            }
+
+            img {
+                height: 4vh;
+                transition: all 200ms;
+            }
+
+            #logoMobile {
+                height: 6vh;
+            }
+        }
+
+        a img:hover {
+            height: 5vh;
+        }
+
+        #menuBurger {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 0.8vh;
+            width: 4vh;
+            height: 3vh;
+            margin: auto;
+
+            div {
+                background-color: white;
+                width: 100%;
+                height: 0.5vh;
+                border-radius: 5px;
+            }
+
+            div:first-child {
+                width: 50%;
+            }
+
+            div:nth-child(2) {
+                width: 75%;
+            }
+        }
+
+    }
+
+    #navInfos {
+        padding: 2vh 5vw;
+    }
+
+    #navSearch {
+        padding: 2vh 5vw 0 5vw;
+    }
+
+}

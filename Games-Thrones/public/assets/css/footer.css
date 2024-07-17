@@ -1,0 +1,65 @@
+footer {
+    box-sizing: border-box;
+    height: fit-content;
+    width: 100%;
+    background-color: black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: white;
+    padding: 3em 20vw;
+
+    a {
+        text-align: center;
+    }
+
+    >a img {
+        height: 8.5em;
+    }
+
+    .footerLinks {
+        a {
+            text-decoration: none;
+            display: block;
+            color: white;
+            padding: 0.5em 1em;
+        }
+
+        a:hover {
+            background-color: #1b1b1b;
+        }
+    }
+
+    .footerSocialMedias {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        justify-items: center;
+
+        img {
+            height: 3em;
+        }
+    }
+
+    div:last-child {
+        grid-column: 1 / 4;
+        text-align: center;
+        margin-top: 2em;
+
+
+    }
+
+}
+
+@media (orientation: portrait) {
+    footer {
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+
+        div:last-child {
+            grid-column: 1;
+            text-align: center;
+            margin-top: 2em;
+        }
+    }
+}

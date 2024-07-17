@@ -1,0 +1,182 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(230, 230, 230);
+    background-image: url('../img/background.jpg');
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
+    max-width: 100%;
+    font-family: "Roboto", sans-serif;
+}
+
+main {
+    min-height: 65vh;
+}
+
+h1 {
+    color: #482664;
+    font-size: 1.5em;
+    font-weight: 700;
+    border-bottom: 1px solid #482664;
+}
+
+h2 {
+    color: #482664;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.corp {
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 0 0 50px rgb(0, 0, 0, 0.2);
+    margin: auto;
+    padding: 3em 5em;
+    width: fit-content;
+    max-width: 80vh;
+
+}
+
+
+/*** Error 404 ***/
+
+.error404 {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15%;
+    height: fit-content;
+    background: linear-gradient(90deg, #f1f2f6, #dddddd);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1fr 2fr;
+    justify-items: center;
+    align-items: center;
+
+    h2 {
+        display: block;
+        font-weight: 900;
+        font-size: 3em;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+
+    }
+
+    img {
+        height: 80%;
+        grid-column: 1/2;
+        grid-row: 1/4;
+    }
+
+    a {
+        color: white;
+        background-color: #482664;
+        padding: 1em 2em;
+        border-radius: 15px;
+    }
+
+    p {
+        text-align: center;
+
+        span {
+            display: block;
+            font-size: 200%;
+            color: #482664;
+            font-weight: 900;
+        }
+    }
+
+}
+
+
+/*** Contact ***/
+
+.contact {
+    display: grid;
+    padding: 0 5vw;
+    align-items: center;
+    justify-items: center;
+    box-sizing: border-box;
+    width: fit-content;
+
+    h3 {}
+
+    label {
+        padding-top: 1em;
+    }
+
+    input,
+    select,
+    textarea {
+        box-sizing: border-box;
+        padding: 1em;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f2f6;
+        width: 25vw;
+    }
+
+    option:hover {
+        background-color: #482664 !important;
+    }
+
+    button {
+        background-color: #482664;
+        padding: 1em 3em;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+        margin-top: 2em;
+        border: none;
+        box-shadow: 0 0 0 #482664;
+        text-transform: uppercase;
+        transition: all 200ms;
+    }
+
+    button:hover {
+        background-color: white;
+        color: #482664;
+        box-shadow: 0 0 15px #482664;
+        letter-spacing: 0.5em;
+    }
+
+    p {
+        text-align: center;
+
+        span {
+            display: block;
+            font-size: 0.8em;
+        }
+    }
+}
+
+
+@media (orientation: portrait) {
+    main {
+        padding: 8vh 0 0 0;
+    }
+
+    .error404 {
+
+        grid-template-columns: 1fr;
+        grid-template-rows: 10vh 10vh 10vh 54vh;
+        justify-items: center;
+        align-items: center;
+
+
+        img {
+            height: 95%;
+            grid-column: 1/2;
+            grid-row: 4/5;
+
+        }
+
+    }
+}
